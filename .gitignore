@@ -1,0 +1,6 @@
+/target
+Cargo.lock
+*.tar
+*.tar.gz
+*.tgz
+.env
