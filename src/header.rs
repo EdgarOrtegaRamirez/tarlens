@@ -731,8 +731,8 @@ mod tests {
     fn test_v7_format() {
         let mut block = make_simple_header("old.txt", 10, b'0');
         // Clear magic field to simulate V7 format.
-        for i in 257..265 {
-            block[i] = 0;
+        for b in &mut block[257..265] {
+            *b = 0;
         }
         // Recompute checksum.
         let checksum = compute_checksum(&block);
@@ -765,8 +765,8 @@ mod tests {
     fn test_base256_size() {
         let mut block = make_simple_header("big.bin", 0, b'0');
         // Clear the size field (make_simple_header writes octal zeros = 0x30).
-        for i in 124..136 {
-            block[i] = 0;
+        for b in &mut block[124..136] {
+            *b = 0;
         }
         // Write base-256 encoded size > 8GB.
         // Size field is bytes 124..136 (12 bytes). Base-256: first byte has
@@ -868,6 +868,6 @@ mod tests {
         let (y, m, d) = days_to_ymd(20572);
         assert_eq!(y, 2026);
         assert_eq!(m, 4);
-        assert!(d >= 27 && d <= 29);
+        assert!((27..=29).contains(&d));
     }
 }

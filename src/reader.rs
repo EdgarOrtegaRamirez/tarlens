@@ -347,11 +347,11 @@ mod tests {
             if !content.is_empty() {
                 data.extend_from_slice(content);
                 let padding = (BLOCK_SIZE - (content.len() % BLOCK_SIZE)) % BLOCK_SIZE;
-                data.extend(std::iter::repeat(0u8).take(padding));
+                data.extend(std::iter::repeat_n(0u8, padding));
             }
         }
         // End of archive: two zero blocks.
-        data.extend(std::iter::repeat(0u8).take(BLOCK_SIZE * 2));
+        data.extend(std::iter::repeat_n(0u8, BLOCK_SIZE * 2));
         data
     }
 
